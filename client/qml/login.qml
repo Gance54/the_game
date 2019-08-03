@@ -5,8 +5,8 @@ import io.qt.services.login 1.1
 Window {
     id: loginWindow
     visible: true
-    width: 320
-    height: 240
+    width: 400
+    height: 300
     title: qsTr("LogIn")
 
     LogInClass {
@@ -68,15 +68,15 @@ Window {
         }
 
         signal clicked
-        x: 100
-        y: 150
+        x: 140
+        y: 212
 
     }
 
     Rectangle {
         id: login_rect
-        x: 100
-        y: 32
+        x: 140
+        y: 98
         width: 120
         height: 25
         color: "#fefad3"
@@ -109,8 +109,8 @@ Window {
 
     Rectangle {
         id: pwd_rect
-        x: 100
-        y: 83
+        x: 140
+        y: 149
         width: 120
         height: 25
         color: "#fefad3"
@@ -140,8 +140,34 @@ Window {
 
     }
 
+    Text {
+        id: statusText
+        x: 15
+        y: 20
+        text: qsTr("Welcome!")
+        font.pixelSize: 14
+    }
 
+    Text {
+        id: versionLabel
+        x: 294
+        y: 20
+        text: qsTr("Version:")
+        font.pixelSize: 14
+    }
+
+    Text {
+        id: versionText
+        x: 350
+        y: 20
+        text: loginClass.version
+        font.pixelSize: 14
+    }
 }
+
+
+
+
 
 
 

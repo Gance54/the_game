@@ -12,6 +12,10 @@ QString Login::getPassword() {
     return password_;
 }
 
+QString Login::getVersion() {
+    return version_.getVersionString();
+}
+
 void Login::setLogin(const QString &login) {
     if (login_ == login)
         return;

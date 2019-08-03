@@ -1,6 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QDebug>
+
+#include "game.h"
 #include "login.h"
 
 int main(int argc, char *argv[]) {
