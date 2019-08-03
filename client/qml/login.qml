@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import io.qt.services.login 1.1
 
 Window {
     id: loginWindow
@@ -8,10 +9,16 @@ Window {
     height: 240
     title: qsTr("LogIn")
 
+    LogInClass {
+            id: loginClass
+        }
+
     Item {
         id: login_btn
+        objectName: qsTr("LoginButtonObject")
         width: 121
         height: 54
+        signal qmlSignalPressed(string login, string pwd)
 
         Image {
             id: buttonUp
@@ -35,7 +42,7 @@ Window {
             id: element
             x: 0
             y: 0
-            text: qsTr("Log In")
+            text:qsTr("LogIn")
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             font.capitalization: Font.AllUppercase
@@ -50,11 +57,15 @@ Window {
 
         Connections {
             target: mouseArea
-            onPressed: login_btn.clicked()
+            onPressed: login_btn.clicked();
         }
 
-
-
+        Connections {
+            target: mouseArea
+            onPressed: {
+                login_btn.qmlSignalPressed(login_input.text, pwd_input.text)
+            }
+        }
 
         signal clicked
         x: 100
@@ -84,7 +95,7 @@ Window {
 
         TextInput {
             id: login_input
-            text: qsTr("")
+            text: loginClass.login
             anchors.bottomMargin: 0
             anchors.fill: parent
             clip: false
@@ -118,7 +129,7 @@ Window {
 
         TextInput {
             id: pwd_input
-            text: qsTr("")
+            text: loginClass.password
             anchors.fill: parent
             opacity: 1
             cursorVisible: false
@@ -150,8 +161,11 @@ Window {
 
 
 
+
+
 /*##^## Designer {
-    D{i:2;anchors_x:"-148";anchors_y:"-107"}D{i:3;anchors_x:"-31";anchors_y:17}D{i:4;anchors_height:54;anchors_width:120;anchors_x:0;anchors_y:0}
-D{i:9;anchors_height:22;anchors_width:107;anchors_x:0;anchors_y:25}D{i:12;anchors_height:22;anchors_width:107;anchors_x:0;anchors_y:25}
+    D{i:3;anchors_x:"-31";anchors_y:17}D{i:4;anchors_height:54;anchors_width:120;anchors_x:0;anchors_y:0}
+D{i:2;anchors_x:"-148";anchors_y:"-107"}D{i:9;anchors_height:22;anchors_width:107;anchors_x:0;anchors_y:25}
+D{i:12;anchors_height:22;anchors_width:107;anchors_x:0;anchors_y:25}
 }
  ##^##*/

@@ -13,10 +13,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        src/login.cpp \
         src/main.cpp
 
-RESOURCES += qml.qrc \
-    qml.qrc
+RESOURCES += qml.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -33,3 +33,6 @@ DISTFILES += \
     buttons/buttons_login-1.png \
     buttons/buttons_login-2.png \
     qml/login.qml
+
+HEADERS += \
+    src/login.h
