@@ -2,6 +2,7 @@
 
 Login::Login(QObject *parent) :
     QObject(parent) {
+    status_ = "Welcome!";
 }
 
 QString Login::getLogin() {
@@ -14,6 +15,18 @@ QString Login::getPassword() {
 
 QString Login::getVersion() {
     return version_.getVersionString();
+}
+
+QString Login::getStatus() {
+    return status_;
+}
+
+void Login::setStatus(QString status) {
+    if (status == status_)
+        return;
+
+    status_ = status;
+    emit statusChanged();
 }
 
 void Login::setLogin(const QString &login) {
@@ -31,5 +44,7 @@ void Login::setPassword(const QString &password) {
 }
 
 void Login::onButtonClicked(const QString &login, const QString &pwd) {
-    qDebug()<<login<<pwd;
+    setStatus("Connecting...");
+
+    qDebug() << getStatus();
 }

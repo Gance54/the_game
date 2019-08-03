@@ -11,6 +11,7 @@ class Login : public QObject
     Q_PROPERTY(QString login READ getLogin WRITE setLogin)
     Q_PROPERTY(QString password READ getPassword WRITE setPassword)
     Q_PROPERTY(QString version READ getVersion)
+    Q_PROPERTY(QString status READ getStatus NOTIFY statusChanged)
 
 public:
     explicit Login(QObject *parent = nullptr);
@@ -19,16 +20,19 @@ public:
     QString getLogin();
     QString getPassword();
     QString getVersion();
+    QString getStatus();
+    void setStatus(QString status);
+
+signals:
+    void statusChanged();
 
 public slots:
     void onButtonClicked(const QString &login, const QString &pwd);
 
-signals:
-    void LoginButtonClicked();
-
 private:
     QString login_;
     QString password_;
+    QString status_;
     Version version_;
 };
 

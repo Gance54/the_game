@@ -1,6 +1,5 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
-import io.qt.services.login 1.1
 
 Window {
     id: loginWindow
@@ -8,10 +7,6 @@ Window {
     width: 400
     height: 300
     title: qsTr("LogIn")
-
-    LogInClass {
-            id: loginClass
-        }
 
     Item {
         id: login_btn
@@ -144,7 +139,7 @@ Window {
         id: statusText
         x: 15
         y: 20
-        text: qsTr("Welcome!")
+        text: loginClass.status
         font.pixelSize: 14
     }
 
