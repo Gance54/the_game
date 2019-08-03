@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>login.qml</file>
-        <file>buttons_login-1.png</file>
-        <file>buttons_login-2.png</file>
+        <file>buttons/buttons_login-1.png</file>
+        <file>buttons/buttons_login-2.png</file>
+        <file>qml/login.qml</file>
     </qresource>
 </RCC>

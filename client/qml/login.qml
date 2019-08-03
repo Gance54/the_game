@@ -20,7 +20,7 @@ Window {
             visible: true
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
-            source: "buttons_login-1.png"
+            source: "../buttons/buttons_login-1.png"
         }
 
         Image {
@@ -28,7 +28,7 @@ Window {
             visible: mouseArea.pressed
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
-            source: "buttons_login-2.png"
+            source: "../buttons/buttons_login-2.png"
         }
 
         Text {
