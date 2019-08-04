@@ -14,7 +14,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         src/game.cpp \
-        src/login.cpp
+        src/login.cpp \
+        src/register.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,4 +37,5 @@ DISTFILES += \
 
 HEADERS += \
     src/game.h \
-    src/login.h
+    src/login.h \
+    src/register.h

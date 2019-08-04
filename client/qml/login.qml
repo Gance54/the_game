@@ -9,17 +9,58 @@ Window {
     title: qsTr("LogIn")
 
     Item {
+        id: reg_btn
+        x: 223
+        y: 210
+        width: 121
+        height: 54
+        Image {
+            id: regButtonUp
+            source: "../buttons/buttons_login-1.png"
+            anchors.fill: parent
+            visible: true
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Image {
+            id: regButtonDown
+            source: "../buttons/buttons_login-2.png"
+            anchors.fill: parent
+            visible: regMouseArea.pressed
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Text {
+            id: regText
+            x: 0
+            y: 0
+            text: qsTr("Register")
+            verticalAlignment: Text.AlignVCenter
+            font.capitalization: Font.MixedCase
+            anchors.fill: parent
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: 16
+        }
+
+        MouseArea {
+            id: regMouseArea
+            anchors.fill: parent
+        }
+        objectName: qsTr("RegisterButtonObject")
+    }
+
+    Item {
         id: login_btn
         objectName: qsTr("LoginButtonObject")
         width: 121
         height: 54
+        x: 67
+        y: 210
 
         signal qmlSignalPressed(string login, string pwd)
 
         Image {
-            id: buttonUp
-            x: -148
-            y: -107
+            id: loginButtonUp
             visible: true
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
@@ -27,36 +68,33 @@ Window {
         }
 
         Image {
-            id: buttonDown
-            visible: mouseArea.pressed
+            id: loginButtonDown
+            visible: loginMouseArea.pressed
             anchors.fill: parent
             fillMode: Image.PreserveAspectFit
             source: "../buttons/buttons_login-2.png"
         }
 
         Text {
-            id: element
+            id: loginText
             x: 0
             y: 0
-            text:qsTr("LogIn")
+            width: 121
+            text: "Login"
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font.capitalization: Font.AllUppercase
+            font.capitalization: Font.MixedCase
             anchors.fill: parent
             font.pixelSize: 16
         }
 
         MouseArea {
-            id: mouseArea
+            id: loginMouseArea
             anchors.fill: parent
             onPressed: {
                 login_btn.qmlSignalPressed(login_input.text, pwd_input.text)
             }
         }
-
-        x: 140
-        y: 212
-
     }
 
     Rectangle {
@@ -149,6 +187,7 @@ Window {
         text: loginObject.version
         font.pixelSize: 14
     }
+
 }
 
 
