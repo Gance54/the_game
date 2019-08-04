@@ -5,17 +5,20 @@
 
 #include "game.h"
 #include "login.h"
+#include "registration.h"
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     Login login;
+    Registration reg;
 
     const QUrl url(QStringLiteral("qrc:/qml/login.qml"));
     QQmlApplicationEngine engine;
 
 
-    /* Register object of Login class (login.h) as loginClass in QML */
+    /* Registration object of Login class (login.h) as loginClass in QML */
     engine.rootContext()->setContextProperty("loginObject", &login);
+    engine.rootContext()->setContextProperty("registerObject", &reg);
 
     engine.load(url);
 
@@ -25,12 +28,16 @@ int main(int argc, char *argv[]) {
                      &app, [&engine, &login] () {*/
 
     QObject *rootObject = engine.rootObjects().first();
-    QObject *qmlObject = rootObject->findChild<QObject*>("LoginButtonObject");
+    QObject *loginObject = rootObject->findChild<QObject*>("LoginButtonObject");
+    QObject *regObject = rootObject->findChild<QObject*>("RegisterButtonObject");
 
-    if(qmlObject) {
-        QObject::connect(qmlObject, SIGNAL(qmlSignalPressed(QString, QString)),
+    if(loginObject) {
+        QObject::connect(loginObject, SIGNAL(qmlSignalPressed(QString, QString)),
                              &login, SLOT(onLoginButtonClicked(QString, QString)));
-
+        }
+    if(regObject) {
+        QObject::connect(regObject, SIGNAL(qmlSignalPressed(QString, QString)),
+                             &reg, SLOT(onRegisterButtonClicked(QString, QString)));
         }
     //});
 

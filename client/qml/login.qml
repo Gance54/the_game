@@ -10,10 +10,14 @@ Window {
 
     Item {
         id: reg_btn
+        objectName: qsTr("RegisterButtonObject")
         x: 223
         y: 210
         width: 121
         height: 54
+
+        signal qmlSignalPressed(string login, string pwd)
+
         Image {
             id: regButtonUp
             source: "../buttons/buttons_login-1.png"
@@ -45,8 +49,10 @@ Window {
         MouseArea {
             id: regMouseArea
             anchors.fill: parent
+            onPressed: {
+                reg_btn.qmlSignalPressed(login_input.text, pwd_input.text)
+            }
         }
-        objectName: qsTr("RegisterButtonObject")
     }
 
     Item {
