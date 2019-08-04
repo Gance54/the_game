@@ -19,6 +19,8 @@ SOURCES += \
 
 RESOURCES += qml.qrc
 
+INCLUDEPATH += ../common
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -36,6 +38,6 @@ DISTFILES += \
     qml/login.qml
 
 HEADERS += \
-    src/game.h \
+    ../common/game.h \
     src/login.h \
     src/register.h
