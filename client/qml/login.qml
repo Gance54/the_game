@@ -13,6 +13,7 @@ Window {
         objectName: qsTr("LoginButtonObject")
         width: 121
         height: 54
+
         signal qmlSignalPressed(string login, string pwd)
 
         Image {
@@ -48,21 +49,11 @@ Window {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
-        }
-
-        Connections {
-            target: mouseArea
-            onPressed: login_btn.clicked();
-        }
-
-        Connections {
-            target: mouseArea
             onPressed: {
                 login_btn.qmlSignalPressed(login_input.text, pwd_input.text)
             }
         }
 
-        signal clicked
         x: 140
         y: 212
 
@@ -90,7 +81,7 @@ Window {
 
         TextInput {
             id: login_input
-            text: loginClass.login
+            text: loginObject.login
             anchors.bottomMargin: 0
             anchors.fill: parent
             clip: false
@@ -124,7 +115,7 @@ Window {
 
         TextInput {
             id: pwd_input
-            text: loginClass.password
+            text: loginObject.password
             anchors.fill: parent
             opacity: 1
             cursorVisible: false
@@ -139,7 +130,7 @@ Window {
         id: statusText
         x: 15
         y: 20
-        text: loginClass.status
+        text: loginObject.status
         font.pixelSize: 14
     }
 
@@ -155,30 +146,10 @@ Window {
         id: versionText
         x: 350
         y: 20
-        text: loginClass.version
+        text: loginObject.version
         font.pixelSize: 14
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

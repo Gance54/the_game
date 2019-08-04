@@ -5,6 +5,7 @@
 #include <QString>
 #include <QDebug>
 #include "game.h"
+
 class Login : public QObject
 {
     Q_OBJECT
@@ -21,13 +22,14 @@ public:
     QString getPassword();
     QString getVersion();
     QString getStatus();
+
     void setStatus(QString status);
 
 signals:
     void statusChanged();
 
 public slots:
-    void onButtonClicked(const QString &login, const QString &pwd);
+    void onLoginButtonClicked(const QString &login, const QString &pwd);
 
 private:
     QString login_;

@@ -2,8 +2,10 @@
 #define GAME_H
 #include <qglobal.h>
 #include <QString>
-#define VERSION_MIN 0
+
 #define VERSION_MAJ 1
+#define VERSION_MIN 0
+
 
 class Version {
 public:

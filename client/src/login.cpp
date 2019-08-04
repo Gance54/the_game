@@ -43,8 +43,6 @@ void Login::setPassword(const QString &password) {
     password_ = password;
 }
 
-void Login::onButtonClicked(const QString &login, const QString &pwd) {
+void Login::onLoginButtonClicked(const QString &login, const QString &pwd) {
     setStatus("Connecting...");
-
-    qDebug() << getStatus();
 }
