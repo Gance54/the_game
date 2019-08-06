@@ -174,7 +174,7 @@ Window {
         id: statusText
         x: 15
         y: 20
-        text: loginObject.status
+        text: infoObject.status
         font.pixelSize: 14
     }
 
@@ -190,7 +190,7 @@ Window {
         id: versionText
         x: 350
         y: 20
-        text: loginObject.version
+        text: infoObject.version
         font.pixelSize: 14
     }
 

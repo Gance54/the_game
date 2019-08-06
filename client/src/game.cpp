@@ -6,11 +6,13 @@
 #include "game.h"
 #include "login.h"
 #include "registration.h"
+#include "info.h"
 
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
     Login login;
     Registration reg;
+    Info info;
 
     const QUrl url(QStringLiteral("qrc:/qml/login.qml"));
     QQmlApplicationEngine engine;
@@ -19,6 +21,7 @@ int main(int argc, char *argv[]) {
     /* Registration object of Login class (login.h) as loginClass in QML */
     engine.rootContext()->setContextProperty("loginObject", &login);
     engine.rootContext()->setContextProperty("registerObject", &reg);
+    engine.rootContext()->setContextProperty("infoObject", &info);
 
     engine.load(url);
 
@@ -33,11 +36,11 @@ int main(int argc, char *argv[]) {
 
     if(loginObject) {
         QObject::connect(loginObject, SIGNAL(qmlSignalPressed(QString, QString)),
-                             &login, SLOT(onLoginButtonClicked(QString, QString)));
+                             &info, SLOT(onLoginButtonClicked(QString, QString)));
         }
     if(regObject) {
         QObject::connect(regObject, SIGNAL(qmlSignalPressed(QString, QString)),
-                             &reg, SLOT(onRegisterButtonClicked(QString, QString)));
+                             &info, SLOT(onRegisterButtonClicked(QString, QString)));
         }
     //});
 
