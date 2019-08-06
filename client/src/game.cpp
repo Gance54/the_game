@@ -45,8 +45,3 @@ int main(int argc, char *argv[]) {
 
     return app.exec();
 }
-
-
-
-/*QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                 &app, [&engine, &login] () {*/    //});
