@@ -10,7 +10,7 @@ class Info : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString version READ getVersion)
-    Q_PROPERTY(QString status READ getStatus NOTIFY statusChanged)
+    Q_PROPERTY(QString status READ getStatus WRITE setStatus NOTIFY statusChanged)
 
 public:
     explicit Info(QObject *parent = nullptr);

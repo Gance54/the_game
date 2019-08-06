@@ -24,14 +24,9 @@ int main(int argc, char *argv[]) {
     engine.load(url);
 
     QObject *rootObject = engine.rootObjects().first();
-    QObject *infoObject = rootObject->findChild<QObject*>("InfoObject");
     QObject *loginObject = rootObject->findChild<QObject*>("LoginButtonObject");
     QObject *regObject = rootObject->findChild<QObject*>("RegisterButtonObject");
 
-    if (infoObject) {
-        QObject::connect(infoObject, SIGNAL(qmlSignalStatusChanged(QString)),
-                             &info, SLOT(onStatusChanged(QString)));
-        }
 
     if (loginObject) {
         QObject::connect(loginObject, SIGNAL(qmlSignalPressed(QString, QString)),

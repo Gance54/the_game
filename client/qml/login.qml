@@ -56,8 +56,8 @@ Window {
             id: regMouseArea
             anchors.fill: parent
             onPressed: {
-                info_item.qmlSignalStatusChanged(qsTr("Registration..."))
                 reg_btn.qmlSignalPressed()
+                InfoObject.status = qsTr("Registration...")
             }
         }
     }
@@ -106,7 +106,7 @@ Window {
             anchors.fill: parent
             onPressed: {
                 login_btn.qmlSignalPressed(login_input.text, pwd_input.text)
-                info_item.qmlSignalStatusChanged(qsTr("Loggin in..."))
+                InfoObject.status = qsTr("Loggin in...")
             }
         }
     }
