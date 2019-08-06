@@ -9,6 +9,12 @@ Window {
     title: qsTr("LogIn")
 
     Item {
+        id: info_item
+        objectName: "InfoObject"
+        signal qmlSignalStatusChanged(string new_info)
+    }
+
+    Item {
         id: reg_btn
         objectName: qsTr("RegisterButtonObject")
         x: 223
@@ -16,7 +22,7 @@ Window {
         width: 121
         height: 54
 
-        signal qmlSignalPressed(string login, string pwd)
+        signal qmlSignalPressed()
 
         Image {
             id: regButtonUp
@@ -50,7 +56,8 @@ Window {
             id: regMouseArea
             anchors.fill: parent
             onPressed: {
-                reg_btn.qmlSignalPressed(login_input.text, pwd_input.text)
+                info_item.qmlSignalStatusChanged(qsTr("Registration..."))
+                reg_btn.qmlSignalPressed()
             }
         }
     }
@@ -99,6 +106,7 @@ Window {
             anchors.fill: parent
             onPressed: {
                 login_btn.qmlSignalPressed(login_input.text, pwd_input.text)
+                info_item.qmlSignalStatusChanged(qsTr("Loggin in..."))
             }
         }
     }
@@ -125,7 +133,7 @@ Window {
 
         TextInput {
             id: login_input
-            text: loginObject.login
+            text: LoginObject.login
             anchors.bottomMargin: 0
             anchors.fill: parent
             clip: false
@@ -159,7 +167,7 @@ Window {
 
         TextInput {
             id: pwd_input
-            text: loginObject.password
+            text: LoginObject.password
             anchors.fill: parent
             opacity: 1
             cursorVisible: false
@@ -174,7 +182,7 @@ Window {
         id: statusText
         x: 15
         y: 20
-        text: infoObject.status
+        text: InfoObject.status
         font.pixelSize: 14
     }
 
@@ -190,7 +198,7 @@ Window {
         id: versionText
         x: 350
         y: 20
-        text: infoObject.version
+        text: InfoObject.version
         font.pixelSize: 14
     }
 
