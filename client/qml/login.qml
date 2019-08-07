@@ -9,12 +9,6 @@ Window {
     title: qsTr("LogIn")
 
     Item {
-        id: info_item
-        objectName: "InfoObject"
-        signal qmlSignalStatusChanged(string new_info)
-    }
-
-    Item {
         id: reg_btn
         objectName: qsTr("RegisterButtonObject")
         x: 223
