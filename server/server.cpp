@@ -25,7 +25,7 @@ Server::Server(){
 	return;
     }
 
-    LOGI("The server is running on %s:%s",qPrintable(ipAddress.toString()),
+    LOGI("The server is running on %s:%s", qPrintable(ipAddress.toString()),
 	    qPrintable(QString::number(tcpServer_->serverPort())));
 
     connect(tcpServer_, &QTcpServer::newConnection, this, &Server::sendUserInitialData);
