@@ -12,9 +12,6 @@
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
-    const QUrl url(QStringLiteral("qrc:/qml/Authorization.qml"));
-
-    QQmlApplicationEngine engine;
     Authorization *auth = new Authorization();
 
     return app.exec();
