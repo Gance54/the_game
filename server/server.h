@@ -2,23 +2,25 @@
 #define SERVER_H
 
 #include <QTcpServer>
-#include <QtNetwork>
-
+#include <QWebSocketServer>
 class Server : public QObject
 {
     Q_OBJECT
 
 public:
-    Server();
+    explicit Server(quint16 port, QObject *parent = nullptr);
+    ~Server() override;
 
-private slots:
-    void sendUserInitialData();
+private Q_SLOTS:
+    void onNewConnection();
+    void processTextMessage(QString message);
+    void processBinaryMessage(QByteArray message);
+    void socketDisconnected();
+    void onSslErrors(const QList<QSslError> &errors);
 
 private:
-    bool initialized_;
-    int version_;
-    QTcpServer *tcpServer_ = nullptr;
-    QNetworkSession *networkSession_ = nullptr;
+    QWebSocketServer *pWebSocketServer_;
+    QList<QWebSocket *> clients_;
 };
 
 #endif // SERVER_H

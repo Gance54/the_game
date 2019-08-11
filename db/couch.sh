@@ -1,1 +1,1 @@
-sudo -i -u couchdb /home/couchdb/couchdb/bin/couchdb
+sudo -i -u couchdb /home/couchdb/bin/couchdb

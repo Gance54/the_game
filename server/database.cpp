@@ -12,11 +12,10 @@ Database::Database() {
 }
 
 Database::~Database() {
-
+    delete cManager_;
 }
 
 int Database::testDatabaseConnection() {
-//0deab0263c6fcae8d9ba7a7c0a003479
     QString url = DB_URL "/login_db";
     QJsonObject loginObject;
     loginObject.insert("Login", QJsonValue::fromVariant("TestLogin"));
@@ -27,11 +26,9 @@ int Database::testDatabaseConnection() {
     QJsonDocument doc(loginObject);
 
     QJsonDocument reply = cManager_->dPost(url, doc);
-    //QJsonDocument reply = cManager_->dGet(url);
 
     QString replyString = reply.toJson(QJsonDocument::Compact);
     LOGI("DB url: %s", qPrintable(url));
-    LOGI("DB reply empy: %s", reply.isEmpty() ? "TRUE" : "FALSE");
     LOGI("DB reply: %s", qPrintable(replyString));
 
     return 0;

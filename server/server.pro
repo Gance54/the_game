@@ -21,6 +21,7 @@ SOURCES += \
         server.cpp
 
 QT += network
+QT += websockets
 
 INCLUDEPATH += ../common
 
