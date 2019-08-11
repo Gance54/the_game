@@ -16,7 +16,8 @@ SOURCES += \
         src/game.cpp \
         src/info.cpp \
         src/login.cpp \
-        src/registration.cpp
+        src/registration.cpp \
+        ../common/http_connection.cpp
 
 RESOURCES += qml.qrc
 
@@ -40,6 +41,7 @@ DISTFILES += \
 
 HEADERS += \
     ../common/game.h \
+    ../common/http_connection.h \
     src/info.h \
     src/login.h \
     src/registration.h
