@@ -1,12 +1,13 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import QtQuick.Controls 2.5
 
 Window {
     id: loginWindow
     visible: true
     width: 400
     height: 300
-    title: qsTr("LogIn")
+    title: qsTr("Login")
 
     Item {
         id: reg_btn
@@ -50,8 +51,17 @@ Window {
             id: regMouseArea
             anchors.fill: parent
             onPressed: {
-                reg_btn.qmlSignalPressed()
+                reg_btn.qmlSignalPressed()    //mb delete?
                 InfoObject.status = qsTr("Registration...")
+                //reg_win.setVisible(true)
+                /*
+                var regComponent = Qt.createComponent("Registration.qml");
+                if (regComponent.status == Component.Ready) {
+                    var regWindow = regComponent.createObject(this);
+                    regWindow.show()
+                } else if (regComponent.status == Component.Error) {
+                    console.log("Error loading Registration window:", regComponent.errorString());
+                }*/
             }
         }
     }
@@ -84,6 +94,7 @@ Window {
 
         Text {
             id: loginText
+            objectName: qsTr("test")
             x: 0
             y: 0
             width: 121
@@ -128,6 +139,7 @@ Window {
         TextInput {
             id: login_input
             text: LoginObject.login
+            font.family: "Times New Roman"
             anchors.bottomMargin: 0
             anchors.fill: parent
             clip: false
@@ -195,6 +207,17 @@ Window {
         text: InfoObject.version
         font.pixelSize: 14
     }
+
+    /* Registration window, defined in Registration.qml
+
+    Registration {
+        id: reg_win
+        objectName: qsTr("RegistrationWindow")
+    }
+
+    // Registration ends
+
+    */
 
 }
 
