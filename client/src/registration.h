@@ -24,9 +24,11 @@ public:
     QString getPassword();
     QString getPassword_rpt();
     QString getEmail();
+    int verifyPwd();
 
 public slots:
     void onRegisterButtonClicked();
+    void registering();
 
 private:
     QString login_;

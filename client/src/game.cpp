@@ -21,8 +21,6 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("InfoObject", &info);
     engine.rootContext()->setContextProperty("LoginObject", &login);
 
-    QQmlContext *regContext = new QQmlContext(engine.rootContext());
-    regContext->setContextProperty("RegistrationObject", &reg);
 
     engine.load(url);
 

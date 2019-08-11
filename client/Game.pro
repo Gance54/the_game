@@ -36,7 +36,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     buttons/buttons_login-1.png \
     buttons/buttons_login-2.png \
-    qml/login.qml
+    qml/game.qml
 
 HEADERS += \
     ../common/game.h \

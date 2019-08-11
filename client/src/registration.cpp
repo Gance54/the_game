@@ -28,7 +28,7 @@ QString Registration::getEmail(){
 void Registration::setLogin(const QString &login) {
     if (login_ == login)
         return;
-
+    qDebug() << "login set" << login;
     login_ = login;
 }
 
@@ -53,17 +53,39 @@ void Registration::setEmail(const QString &email) {
     email_ = email;
 }
 
+int verifyPwd() {
+
+}
 
 void Registration::onRegisterButtonClicked() {
-   qDebug() << "Registration clicked";
-   Registration reg;
-   QQmlEngine engine;
-   QQmlComponent component(&engine, "qrc:/qml/Registration.qml");
-   QObject *object = component.create();
-   QObject *childObject = object->findChild<QObject*>("Register");
-   if(childObject)
+    qDebug() << "Registration clicked";
+    const QUrl url(QStringLiteral("qrc:/qml/Registration.qml"));
+    QQmlApplicationEngine *engine = new QQmlApplicationEngine();
+    engine->rootContext()->setContextProperty("RegistrationObject", this);
+
+    engine->load(url);
+
+    QObject *rootObject = engine->rootObjects().first();
+    QObject *regObject = rootObject->findChild<QObject*>("Register");
+
+    if (regObject) {
+        QObject::connect(regObject, SIGNAL(registerMe()), this, SLOT(registering()));
+        }
+
+
+   /*
+    *    QObject *rootObject = engine.rootObjects().first();
+    QObject *regObject = rootObject->findChild<QObject*>("RegisterButtonObject");
+    *
+    *
+    *
+    * if(childObject)
        qDebug() << "reg object found";
    else
-       qDebug() << "reg object is not found";
+       qDebug() << "reg object is not found";*/
 
+}
+
+void Registration::registering() {
+    qDebug() << "Registering";
 }

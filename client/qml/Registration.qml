@@ -13,6 +13,7 @@ Window {
         id: login
         x: 150
         y: 34
+        text : RegistrationObject.login
         placeholderText: "Your login"
     }
 
@@ -73,12 +74,16 @@ Window {
         y: 306
         text: qsTr("Register")
         font.family: "Verdana"
-
-        signal registerMe(string login, string pwd)
+        signal registerMe()
 
         onClicked:
-            register.registerMe(login.text, pwd.text)
-            //RegistrationObject.login = login.text
+        {
+            RegistrationObject.login = login.text
+            RegistrationObject.password = pwd.text
+            RegistrationObject.password_rpt = pwd_rpt.text
+            RegistrationObject.email = email.text
+            register.registerMe()
+        }
     }
 
     Button {
