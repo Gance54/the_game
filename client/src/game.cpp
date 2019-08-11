@@ -14,19 +14,21 @@ int main(int argc, char *argv[]) {
     Registration reg;
     Info info;
 
-    const QUrl url(QStringLiteral("qrc:/qml/login.qml"));
+    const QUrl url(QStringLiteral("qrc:/qml/game.qml"));
     QQmlApplicationEngine engine;
 
-    /* Registration object of Login class (login.h) as loginClass in QML */
+
     engine.rootContext()->setContextProperty("InfoObject", &info);
     engine.rootContext()->setContextProperty("LoginObject", &login);
+
+    QQmlContext *regContext = new QQmlContext(engine.rootContext());
+    regContext->setContextProperty("RegistrationObject", &reg);
 
     engine.load(url);
 
     QObject *rootObject = engine.rootObjects().first();
     QObject *loginObject = rootObject->findChild<QObject*>("LoginButtonObject");
     QObject *regObject = rootObject->findChild<QObject*>("RegisterButtonObject");
-
 
     if (loginObject) {
         QObject::connect(loginObject, SIGNAL(qmlSignalPressed(QString, QString)),
