@@ -13,6 +13,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        src/authorization.cpp \
         src/game.cpp \
         src/info.cpp \
         src/login.cpp \
@@ -37,11 +38,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     buttons/buttons_login-1.png \
     buttons/buttons_login-2.png \
-    qml/game.qml
+    qml/Authorization.qml
 
 HEADERS += \
     ../common/game.h \
     ../common/http_connection.h \
+    src/authorization.h \
     src/info.h \
     src/login.h \
     src/registration.h

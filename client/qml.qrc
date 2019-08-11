@@ -2,7 +2,7 @@
     <qresource prefix="/">
         <file>buttons/buttons_login-1.png</file>
         <file>buttons/buttons_login-2.png</file>
-        <file>qml/game.qml</file>
+        <file>qml/Authorization.qml</file>
         <file>qml/Registration.qml</file>
     </qresource>
 </RCC>

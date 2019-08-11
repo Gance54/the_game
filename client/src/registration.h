@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <QDebug>
+#include <QQmlApplicationEngine>
 #include "game.h"
 
 class Registration : public QObject
@@ -28,14 +29,14 @@ public:
 
 public slots:
     void onRegisterButtonClicked();
-    void registering();
+    void registerMe();
 
 private:
     QString login_;
     QString password_;
     QString password_rpt_;
     QString email_;
-
+    QQmlApplicationEngine *engine_;
 };
 
 #endif // REGISTER_H
