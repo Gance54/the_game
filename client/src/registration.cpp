@@ -71,6 +71,7 @@ void Registration::registerMe() {
     message.insert("payload", QJsonValue(payload));
     QJsonDocument doc(message);
     socketManager_.openUrl(SERVER_URL);
+    socketManager_.sendJson(doc);
 }
 
 int Registration::verify() {

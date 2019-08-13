@@ -1,4 +1,6 @@
 #include "websocket_connection.h"
+#include <QEventLoop>
+
 WebSocketManager::WebSocketManager() : connected_(false) {
     QSslConfiguration sslConfiguration;
     QFile certFile(QStringLiteral("E:\\repo\\Game\\Game\\client\\client.crt"));
@@ -42,4 +44,21 @@ void WebSocketManager::openUrl(QString url) {
 
 Info * WebSocketManager::getInfo() {
     return &info_;
+}
+
+int WebSocketManager::sendJson(QJsonDocument &doc) {
+    if (!connected_) {
+        info_.setStatus("Waiting for connection...");
+        QEventLoop loop;
+        QObject::connect(&webSocket_, SIGNAL(connected()), &loop, SLOT(quit()));
+        loop.exec();
+
+    }
+
+    if (webSocket_.sendBinaryMessage(doc.toJson()) != doc.toJson().size()) {
+        info_.setStatus("Failed to send data!");
+        return -1;
+    }
+
+    return 0;
 }

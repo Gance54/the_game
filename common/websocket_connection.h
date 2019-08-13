@@ -14,7 +14,7 @@
 #include <QJsonObject>
 #include "info.h"
 
-#define SERVER_URL "wss://192.168.0.169:35250"
+#define SERVER_URL "wss://78.27.147.83:35250"
 
 class WebSocketManager : public QObject {
     Q_OBJECT
@@ -27,6 +27,7 @@ public:
     WebSocketManager();
     void openUrl(QString url);
     Info *getInfo();
+    int sendJson(QJsonDocument &doc);
 
 private:
     QWebSocket webSocket_;
