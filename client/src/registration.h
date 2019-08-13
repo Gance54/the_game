@@ -5,7 +5,9 @@
 #include <QString>
 #include <QDebug>
 #include <QQmlApplicationEngine>
+
 #include "game.h"
+#include "websocket_connection.h"
 
 class Registration : public QObject
 {
@@ -25,10 +27,9 @@ public:
     QString getPassword();
     QString getPassword_rpt();
     QString getEmail();
-    int verifyPwd();
+    int verify();
 
 public slots:
-    void onRegisterButtonClicked();
     void registerMe();
 
 private:
@@ -37,6 +38,7 @@ private:
     QString password_rpt_;
     QString email_;
     QQmlApplicationEngine *engine_;
+    WebSocketManager socketManager_;
 };
 
 #endif // REGISTER_H

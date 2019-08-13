@@ -9,12 +9,11 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-class ConnectivityManager
-{
+class ConnectivityManager {
 public:
     enum ConnectionType {
-	MESSAGE_ENCRYPTED = 1,
-	MESSAGE_PLAIN
+        MESSAGE_ENCRYPTED = 1,
+        MESSAGE_PLAIN
     };
 
     ConnectivityManager(ConnectionType type = MESSAGE_PLAIN);

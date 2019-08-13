@@ -3,6 +3,10 @@
 #include <QMutex>
 #include <QMutexLocker>
 
+#include <QtCore/QFile>
+#include <QtNetwork/QSslCertificate>
+#include <QtNetwork/QSslKey>
+
 #include "http_connection.h"
 
 ConnectivityManager::ConnectivityManager(ConnectionType type)
@@ -10,9 +14,9 @@ ConnectivityManager::ConnectivityManager(ConnectionType type)
     manager_ = new QNetworkAccessManager();
 
     if (type == MESSAGE_ENCRYPTED) {
-	QSslConfiguration config = QSslConfiguration::defaultConfiguration();
-	config.setProtocol(QSsl::TlsV1_0OrLater);
-	request_.setSslConfiguration(config);
+        QSslConfiguration config = QSslConfiguration::defaultConfiguration();
+        config.setProtocol(QSsl::TlsV1_0OrLater);
+        request_.setSslConfiguration(config);
     }
 
     request_.setRawHeader("Content-Type", "application/json");
