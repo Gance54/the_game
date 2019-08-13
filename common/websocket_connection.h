@@ -12,6 +12,7 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "info.h"
 
 #define SERVER_URL "wss://192.168.0.169:35250"
 
@@ -25,9 +26,13 @@ public:
 
     WebSocketManager();
     void openUrl(QString url);
+    Info *getInfo();
 
 private:
     QWebSocket webSocket_;
+    bool connected_;
+    Info info_;
+
 };
 
 #endif // WEBSOCKET_CONNECTION_H

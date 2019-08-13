@@ -7,6 +7,7 @@
 #include <QQmlApplicationEngine>
 
 #include "game.h"
+#include "info.h"
 #include "websocket_connection.h"
 
 class Registration : public QObject
@@ -37,7 +38,7 @@ private:
     QString password_;
     QString password_rpt_;
     QString email_;
-    QQmlApplicationEngine *engine_;
+    QQmlApplicationEngine engine_;
     WebSocketManager socketManager_;
 };
 

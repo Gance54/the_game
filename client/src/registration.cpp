@@ -9,11 +9,12 @@ Registration::Registration(QObject *parent) :
     QObject(parent) {
 
     const QUrl url(QStringLiteral("qrc:/qml/Registration.qml"));
-    engine_ = new QQmlApplicationEngine();
-    engine_->rootContext()->setContextProperty("RegistrationObject", this);
-    engine_->load(url);
+    engine_.rootContext()->setContextProperty("RegistrationObject", this);
+    engine_.rootContext()->setContextProperty("statusObject", socketManager_.getInfo());
 
-    QObject *rootObject = engine_->rootObjects().first();
+    engine_.load(url);
+
+    QObject *rootObject = engine_.rootObjects().first();
     QObject *regObject = rootObject->findChild<QObject*>("Register");
 
     if (regObject) {

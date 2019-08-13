@@ -13,7 +13,6 @@ Window {
         id: login
         x: 150
         y: 34
-        text : RegistrationObject.login
         placeholderText: "Your login"
     }
 
@@ -76,8 +75,7 @@ Window {
         font.family: "Verdana"
         signal registerMe()
 
-        onClicked:
-        {
+        onClicked: {
             RegistrationObject.login = login.text
             RegistrationObject.password = pwd.text
             RegistrationObject.password_rpt = pwd_rpt.text
@@ -93,7 +91,19 @@ Window {
         text: qsTr("Cancel")
     }
 
+    Text {
+        id: status
+        x: 13
+        y: 10
+        text: statusObject.status
+        font.pixelSize: 12
+    }
+
 }
+
+
+
+
 
 
 
