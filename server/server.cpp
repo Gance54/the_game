@@ -5,6 +5,9 @@
 #include <QtNetwork/QSslCertificate>
 #include <QtNetwork/QSslKey>
 #include <QNetworkInterface>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include "server.h"
 #include "log.h"
 
@@ -92,7 +95,7 @@ void Server::processBinaryMessage(QByteArray message)
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (pClient)
     {
-        pClient->sendBinaryMessage(message);
+	qDebug() <<(QJsonDocument::fromJson(message)).toJson(QJsonDocument::Compact);
     }
 }
 
