@@ -15,13 +15,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        ../common/websocket_connection.cpp \
         src/authorization.cpp \
         src/game.cpp \
         src/info.cpp \
         src/login.cpp \
         src/registration.cpp \
-        ../common/http_connection.cpp
+        ../common/http_connection.cpp \
+        src/websocket_connection.cpp
 
 RESOURCES += qml.qrc
 
@@ -47,11 +47,11 @@ DISTFILES += \
 HEADERS += \
     ../common/game.h \
     ../common/http_connection.h \
-    ../common/websocket_connection.h \
     src/authorization.h \
     src/info.h \
     src/login.h \
-    src/registration.h
+    src/registration.h \
+    src/websocket_connection.h
 
 documentation.files = client.key client.crt
 

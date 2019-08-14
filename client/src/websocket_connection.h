@@ -19,10 +19,6 @@
 class WebSocketManager : public QObject {
     Q_OBJECT
 public:
-    enum MessageTags {
-        TAG_REGISTRATION  = 1,
-        TAG_LOGIN
-    };
 
     WebSocketManager();
     void openUrl(QString url);

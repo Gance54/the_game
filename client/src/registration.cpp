@@ -4,6 +4,7 @@
 #include <QQmlComponent>
 
 #include "registration.h"
+#include "game.h"
 
 Registration::Registration(QObject *parent) :
     QObject(parent) {
@@ -55,17 +56,17 @@ void Registration::setEmail(const QString &email) {
 }
 
 void Registration::registerMe() {
-    /*if (verify()) {
-        qDebug("Verification failed");
+    if (verify()) {
+        socketManager_.getInfo()->setStatus("Please fill form correctly!");
         return;
-    }*/
+    }
 
     QJsonObject payload;
     payload.insert("login", QJsonValue::fromVariant(login_));
     payload.insert("password", QJsonValue::fromVariant(password_));
     payload.insert("email", QJsonValue::fromVariant(email_));
     QJsonObject header;
-    header.insert("tag", QJsonValue::fromVariant(WebSocketManager::TAG_LOGIN));
+    header.insert("tag", QJsonValue::fromVariant(MessageTags::TAG_LOGIN));
     QJsonObject message;
     message.insert("header", QJsonValue(header));
     message.insert("payload", QJsonValue(payload));

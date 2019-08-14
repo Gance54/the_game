@@ -43,5 +43,10 @@ private:
 
 };
 
+enum MessageTags {
+    TAG_REGISTRATION  = 1,
+    TAG_LOGIN
+};
+
 
 #endif // GAME_H
