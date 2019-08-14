@@ -88,7 +88,8 @@ void Server::processTextMessage(QString message) {
 void Server::processBinaryMessage(QByteArray message) {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (pClient) {
-	qDebug() <<(QJsonDocument::fromJson(message)).toJson(QJsonDocument::Compact);
+	QJsonDocument doc = QJsonDocument::fromJson(message);
+
     }
 }
 
