@@ -43,9 +43,11 @@ private:
 
 };
 
-enum MessageTags {
+enum MessageTag {
     TAG_REGISTRATION  = 1,
-    TAG_LOGIN
+    TAG_LOGIN,
+
+    TAG_UNKNOWN
 };
 
 
