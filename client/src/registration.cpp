@@ -7,6 +7,8 @@
 #include "json_classes.h"
 #include "game.h"
 
+
+//TODO: replace info object from socket manager to registration
 Registration::Registration(QObject *parent) :
     QObject(parent) {
 
@@ -90,4 +92,5 @@ int Registration::verify() {
 void Registration::processRegistrationResponse(QByteArray message) {
     QJsonDocument doc = QJsonDocument::fromJson(message);
     qDebug("message: %s", qPrintable(doc.toJson(QJsonDocument::Indented)));
+    socketManager_.getInfo()->setStatus("OK!");
 }
