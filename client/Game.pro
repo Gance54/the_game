@@ -4,6 +4,7 @@ QT += websockets
 CONFIG += c++11
 
 SOURCES += \
+        ../common/json_classes.cpp \
         src/authorization.cpp \
         src/game.cpp \
         src/info.cpp \
@@ -36,6 +37,7 @@ DISTFILES += \
 HEADERS += \
     ../common/game.h \
     ../common/http_connection.h \
+    ../common/json_classes.h \
     src/authorization.h \
     src/info.h \
     src/login.h \

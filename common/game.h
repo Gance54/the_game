@@ -50,5 +50,4 @@ enum MessageTag {
     TAG_UNKNOWN
 };
 
-
 #endif // GAME_H

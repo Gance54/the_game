@@ -9,9 +9,7 @@
 #include <QObject>
 #include <QString>
 #include <QDebug>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
+#include "json_classes.h"
 #include "info.h"
 
 #define SERVER_URL "wss://78.27.147.83:35250"

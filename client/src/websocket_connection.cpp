@@ -3,8 +3,10 @@
 
 WebSocketManager::WebSocketManager() : connected_(false) {
     QSslConfiguration sslConfiguration;
-    QFile certFile(QStringLiteral("E:\\repo\\Game\\Game\\client\\client.crt"));
-    QFile keyFile(QStringLiteral("E:\\repo\\Game\\Game\\client\\client.key"));
+    //QFile certFile(QStringLiteral("E:\\repo\\Game\\Game\\client\\client.crt"));
+    //QFile keyFile(QStringLiteral("E:\\repo\\Game\\Game\\client\\client.key"));
+    QFile certFile(QStringLiteral("client.crt"));
+    QFile keyFile(QStringLiteral("client.key"));
     if (!certFile.open(QIODevice::ReadOnly)) {
         info_.setStatus("Certificate not found:" + certFile.fileName());
         return;

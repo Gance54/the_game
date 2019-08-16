@@ -4,6 +4,7 @@
 #include <QQmlComponent>
 
 #include "registration.h"
+#include "json_classes.h"
 #include "game.h"
 
 Registration::Registration(QObject *parent) :
@@ -60,17 +61,15 @@ void Registration::registerMe() {
         socketManager_.getInfo()->setStatus("Please fill form correctly!");
         return;
     }
+    JsonRegRequest request;
+    request.setLogin(login_);
+    request.setPassword(password_);
+    request.setEmail(email_);
 
-    QJsonObject payload;
-    payload.insert("login", QJsonValue::fromVariant(login_));
-    payload.insert("password", QJsonValue::fromVariant(password_));
-    payload.insert("email", QJsonValue::fromVariant(email_));
-    QJsonObject header;
-    header.insert("tag", QJsonValue::fromVariant(MessageTag::TAG_LOGIN));
-    QJsonObject message;
-    message.insert("header", QJsonValue(header));
-    message.insert("payload", QJsonValue(payload));
-    QJsonDocument doc(message);
+    JsonMessage message(MessageTag::TAG_REGISTRATION, request.object());
+    message.print();
+    QJsonDocument doc(message.object());
+
     socketManager_.openUrl(SERVER_URL);
     socketManager_.sendJson(doc);
 }
