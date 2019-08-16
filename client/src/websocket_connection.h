@@ -23,11 +23,16 @@ public:
     Info *getInfo();
     int sendJson(QJsonDocument &doc);
 
+signals:
+    void dataReceived(QByteArray message);
+
+public slots:
+    void emitDataReceived(QByteArray message);
+
 private:
     QWebSocket webSocket_;
     bool connected_;
     Info info_;
-
 };
 
 #endif // WEBSOCKET_CONNECTION_H

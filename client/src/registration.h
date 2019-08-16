@@ -40,6 +40,9 @@ private:
     QString email_;
     QQmlApplicationEngine engine_;
     WebSocketManager socketManager_;
+
+private slots:
+    void processRegistrationResponse(QByteArray message);
 };
 
 #endif // REGISTER_H

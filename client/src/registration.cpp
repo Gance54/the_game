@@ -61,6 +61,7 @@ void Registration::registerMe() {
         socketManager_.getInfo()->setStatus("Please fill form correctly!");
         return;
     }
+
     JsonRegRequest request;
     request.setLogin(login_);
     request.setPassword(password_);
@@ -72,6 +73,9 @@ void Registration::registerMe() {
 
     socketManager_.openUrl(SERVER_URL);
     socketManager_.sendJson(doc);
+
+    connect(&socketManager_, &WebSocketManager::dataReceived,
+            this, &Registration::processRegistrationResponse);
 }
 
 int Registration::verify() {
@@ -81,4 +85,9 @@ int Registration::verify() {
         return -1;
     }
     return 0;
+}
+
+void Registration::processRegistrationResponse(QByteArray message) {
+    QJsonDocument doc = QJsonDocument::fromJson(message);
+    qDebug("message: %s", qPrintable(doc.toJson(QJsonDocument::Indented)));
 }

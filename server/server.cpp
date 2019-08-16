@@ -8,7 +8,9 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+
 #include "server.h"
+#include "json_classes.h"
 #include "log.h"
 
 QT_USE_NAMESPACE
@@ -87,10 +89,24 @@ void Server::processTextMessage(QString message) {
 
 void Server::processBinaryMessage(QByteArray message) {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    if (pClient) {
-	QJsonDocument doc = QJsonDocument::fromJson(message);
-
+    if (!pClient) {
+        qDebug("No client. Ignoring");
     }
+
+    JsonMessage msg(QJsonDocument::fromJson(message));
+    int ret;
+    switch (msg.getHeader().getTag()) {
+    case MessageTag::TAG_REGISTRATION:
+        ret = db_.ProcessRegistrationRequest(msg.getPayload());
+        break;
+    default:
+        return;
+    }
+
+    QJsonObject resp;
+    resp.insert("Response", "OK");
+
+    pClient->sendBinaryMessage(QJsonDocument(resp).toJson());
 }
 
 void Server::socketDisconnected() {

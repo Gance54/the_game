@@ -54,7 +54,6 @@ int WebSocketManager::sendJson(QJsonDocument &doc) {
         QEventLoop loop;
         QObject::connect(&webSocket_, SIGNAL(connected()), &loop, SLOT(quit()));
         loop.exec();
-
     }
 
     if (webSocket_.sendBinaryMessage(doc.toJson()) != doc.toJson().size()) {
@@ -62,5 +61,14 @@ int WebSocketManager::sendJson(QJsonDocument &doc) {
         return -1;
     }
 
+    /* trigger received data slot as soon as we get response */
+    info_.setStatus("Awaiting response...");
+    connect(&webSocket_, &QWebSocket::binaryMessageReceived, this,
+            &WebSocketManager::emitDataReceived);
+
     return 0;
+}
+
+void WebSocketManager::emitDataReceived(QByteArray message) {
+    emit dataReceived(message);
 }

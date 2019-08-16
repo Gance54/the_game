@@ -15,6 +15,13 @@ Database::~Database() {
     delete cManager_;
 }
 
+int Database::ProcessRegistrationRequest(QJsonObject req) {
+    JsonRegRequest request(req);
+    qDebug("Processing registration request:");
+    request.print();
+    return 0;
+}
+
 int Database::testDatabaseConnection() {
     QString url = DB_URL "/login_db";
     QJsonObject loginObject;
