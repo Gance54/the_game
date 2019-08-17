@@ -48,13 +48,12 @@ Info * WebSocketManager::getInfo() {
     return &info_;
 }
 
+//TODO: change this to get rid of loop execution
 int WebSocketManager::sendJson(QJsonDocument &doc) {
-    if (!connected_) {
-        info_.setStatus("Waiting for connection...");
-        QEventLoop loop;
-        QObject::connect(&webSocket_, SIGNAL(connected()), &loop, SLOT(quit()));
-        loop.exec();
-    }
+    info_.setStatus("Waiting for connection...");
+    QEventLoop loop;
+    QObject::connect(&webSocket_, SIGNAL(connected()), &loop, SLOT(quit()));
+    loop.exec();
 
     if (webSocket_.sendBinaryMessage(doc.toJson()) != doc.toJson().size()) {
         info_.setStatus("Failed to send data!");
@@ -67,6 +66,10 @@ int WebSocketManager::sendJson(QJsonDocument &doc) {
             &WebSocketManager::emitDataReceived);
 
     return 0;
+}
+
+QWebSocket& WebSocketManager::getSocket() {
+    return webSocket_;
 }
 
 void WebSocketManager::emitDataReceived(QByteArray message) {

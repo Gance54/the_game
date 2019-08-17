@@ -70,11 +70,10 @@ Server::~Server() {
 void Server::onNewConnection() {
     QWebSocket *pSocket = pWebSocketServer_->nextPendingConnection();
 
-    qDebug() << "Client connected:" << pSocket->peerName() << pSocket->origin();
+    qDebug("Client connected with socket %p", (void*)pSocket);
 
     connect(pSocket, &QWebSocket::textMessageReceived, this, &Server::processTextMessage);
-    connect(pSocket, &QWebSocket::binaryMessageReceived,
-            this, &Server::processBinaryMessage);
+    connect(pSocket, &QWebSocket::binaryMessageReceived, this, &Server::processBinaryMessage);
     connect(pSocket, &QWebSocket::disconnected, this, &Server::socketDisconnected);
 
     clients_ << pSocket;
@@ -88,6 +87,7 @@ void Server::processTextMessage(QString message) {
 }
 
 void Server::processBinaryMessage(QByteArray message) {
+    qDebug() << "Processing binary message...";
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
     if (!pClient) {
         qDebug("No client. Ignoring");

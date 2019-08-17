@@ -22,6 +22,7 @@ public:
     void openUrl(QString url);
     Info *getInfo();
     int sendJson(QJsonDocument &doc);
+    QWebSocket& getSocket();
 
 signals:
     void dataReceived(QByteArray message);
