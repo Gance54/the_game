@@ -50,11 +50,35 @@ private:
     QJsonObject message_;
 };
 
+class JsonResponse {
+public:
+    JsonResponse();
+    JsonResponse(QJsonObject obj);
+    JsonResponse(ErrorCode err);
+    ~JsonResponse();
+
+    ErrorCode getError();
+    QJsonObject getExtra();
+    QJsonObject object();
+    void setError(ErrorCode err);
+    void setExtra(QJsonObject extra);
+    QString getString();
+
+private:
+    ErrorCode error_;
+    QJsonObject extra_;
+    QJsonObject response_;
+};
+
 class JsonRegRequest {
 public:
     JsonRegRequest();
     JsonRegRequest(QJsonObject obj);
     ~JsonRegRequest(){}
+
+    QString getLogin();
+    QString getPassword();
+    QString getEmail();
 
     void setLogin(QString login);
     void setPassword(QString password);

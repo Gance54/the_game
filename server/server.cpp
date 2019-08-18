@@ -94,7 +94,7 @@ void Server::processBinaryMessage(QByteArray message) {
     }
 
     JsonMessage msg(QJsonDocument::fromJson(message));
-    int ret;
+    ErrorCode ret = ERROR_UNKNOWN;
     switch (msg.getHeader().getTag()) {
     case MessageTag::TAG_REGISTRATION:
         ret = db_.ProcessRegistrationRequest(msg.getPayload());
@@ -103,10 +103,9 @@ void Server::processBinaryMessage(QByteArray message) {
         return;
     }
 
-    QJsonObject resp;
-    resp.insert("Response", "OK");
+    JsonResponse response(ret);
 
-    pClient->sendBinaryMessage(QJsonDocument(resp).toJson());
+    pClient->sendBinaryMessage(QJsonDocument(response.object()).toJson());
 }
 
 void Server::socketDisconnected() {

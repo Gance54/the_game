@@ -19,7 +19,7 @@ JsonHeader::JsonHeader(MessageTag tag) {
 
 JsonHeader::JsonHeader(QJsonObject object) {
     header_ = object;
-    tag_ = static_cast<MessageTag>(header_.value("tag").toInt());
+    tag_ = static_cast<MessageTag>(header_["tag"].toInt());
 }
 
 void JsonHeader::setTag(MessageTag tag) {
@@ -30,7 +30,7 @@ void JsonHeader::setTag(MessageTag tag) {
 void JsonHeader::setObject(QJsonObject header) {
     header_ = header;
     ssid_ = header["ssid"].toVariant().toULongLong();
-    tag_ = static_cast<MessageTag>(header_.value("tag").toInt());
+    tag_ = static_cast<MessageTag>(header_["tag"].toInt());
 }
 
 void JsonHeader::setSsid(qulonglong ssid) {
@@ -88,15 +88,70 @@ void JsonMessage::setPayload(QJsonObject payload) {
 JsonHeader JsonMessage::getHeader() {
     return header_;
 }
+
 QJsonObject JsonMessage::getPayload() {
     return payload_;
 }
+
 QJsonObject JsonMessage::object() {
     return message_;
 }
 
 void JsonMessage::print() {
    printJson("Message", message_);
+}
+
+/* JsonResponse class */
+/* --------------------------------------------*/
+
+JsonResponse::JsonResponse() {
+    error_ = ErrorCode::ERROR_UNKNOWN;
+}
+
+JsonResponse::JsonResponse(QJsonObject obj) {
+    response_ = obj;
+    error_ = static_cast<ErrorCode>(response_["error"].toInt());
+    extra_ = response_["extra"].toObject();
+}
+
+JsonResponse::JsonResponse(ErrorCode err) {
+    setError(err);
+}
+
+JsonResponse::~JsonResponse() {}
+
+ErrorCode JsonResponse::getError() {
+    return error_;
+}
+
+QJsonObject JsonResponse::getExtra() {
+    return extra_;
+}
+
+QJsonObject JsonResponse::object() {
+    return response_;
+}
+
+void JsonResponse::setError(ErrorCode err) {
+    error_ = err;
+    response_.insert("error", error_);
+}
+void JsonResponse::setExtra(QJsonObject extra) {
+    extra_ = extra;
+    response_.insert("extra", extra);
+}
+
+QString JsonResponse::getString() {
+    switch (error_) {
+    case ERROR_OK:
+        return "Success!";
+    case ERROR_UNKNOWN:
+        return "Unknown error";
+    case ERROR_LOGIN_EXISTS:
+        return "Login already exists.";
+    default:
+        return "WTF?!";
+    }
 }
 
 /* JsonRegRequest class */
@@ -110,6 +165,18 @@ JsonRegRequest::JsonRegRequest(QJsonObject obj) {
     login_ = request_["login"].toString();
     password_ = request_["password"].toString();
     email_ = request_["email"].toString();
+}
+
+QString JsonRegRequest::getLogin() {
+    return login_;
+}
+
+QString JsonRegRequest::getPassword() {
+    return password_;
+}
+
+QString JsonRegRequest::getEmail() {
+    return email_;
 }
 
 void JsonRegRequest::setLogin(QString login) {

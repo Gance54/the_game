@@ -97,7 +97,9 @@ int Registration::verify() {
 void Registration::processRegistrationResponse(QByteArray message) {
     QJsonDocument doc = QJsonDocument::fromJson(message);
     qDebug("message: %s", qPrintable(doc.toJson(QJsonDocument::Indented)));
-    socketManager_.getInfo()->setStatus("OK!");
+
+    JsonResponse resp(doc.object());
+    socketManager_.getInfo()->setStatus(resp.getString());
     disconnect(&socketManager_, &WebSocketManager::dataReceived,
                this, &Registration::processRegistrationResponse);
 }
