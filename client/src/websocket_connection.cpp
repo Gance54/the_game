@@ -38,22 +38,33 @@ WebSocketManager::WebSocketManager() : connected_(false) {
         connected_ = false;
     });
 
+    /* Emit data received signal on receiving the data */
+    connect(&webSocket_, &QWebSocket::binaryMessageReceived, this,
+            &WebSocketManager::emitDataReceived);
 }
 
 void WebSocketManager::openUrl(QString url) {
-    webSocket_.open(QUrl(url));
+    if (connected_ && !QString::compare(url, url_)) {
+        return;
+    }
+
+    if (QString::compare(url, url_) && connected_)
+        webSocket_.disconnect();
+
+    url_ = url;
+    webSocket_.open(QUrl(url_));
+    info_.setStatus("Waiting for connection...");
 }
 
 Info * WebSocketManager::getInfo() {
     return &info_;
 }
 
-//TODO: change this to get rid of loop execution
 int WebSocketManager::sendJson(QJsonDocument &doc) {
-    info_.setStatus("Waiting for connection...");
-    QEventLoop loop;
-    QObject::connect(&webSocket_, SIGNAL(connected()), &loop, SLOT(quit()));
-    loop.exec();
+    if (!connected_) {
+        info_.setStatus("No connection to server.");
+        return -1;
+    }
 
     if (webSocket_.sendBinaryMessage(doc.toJson()) != doc.toJson().size()) {
         info_.setStatus("Failed to send data!");
@@ -62,13 +73,15 @@ int WebSocketManager::sendJson(QJsonDocument &doc) {
 
     /* trigger received data slot as soon as we get response */
     info_.setStatus("Awaiting response...");
-    connect(&webSocket_, &QWebSocket::binaryMessageReceived, this,
-            &WebSocketManager::emitDataReceived);
 
     return 0;
 }
 
-QWebSocket& WebSocketManager::getSocket() {
+bool WebSocketManager::connected() {
+    return connected_;
+}
+
+QWebSocketEx &WebSocketManager::getSocket() {
     return webSocket_;
 }
 

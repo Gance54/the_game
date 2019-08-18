@@ -14,6 +14,10 @@
 
 #define SERVER_URL "wss://78.27.147.83:35250"
 
+class QWebSocketEx : public QWebSocket {
+
+};
+
 class WebSocketManager : public QObject {
     Q_OBJECT
 public:
@@ -22,7 +26,8 @@ public:
     void openUrl(QString url);
     Info *getInfo();
     int sendJson(QJsonDocument &doc);
-    QWebSocket& getSocket();
+    QWebSocketEx& getSocket();
+    bool connected();
 
 signals:
     void dataReceived(QByteArray message);
@@ -31,9 +36,10 @@ public slots:
     void emitDataReceived(QByteArray message);
 
 private:
-    QWebSocket webSocket_;
+    QWebSocketEx webSocket_;
     bool connected_;
     Info info_;
+    QString url_;
 };
 
 #endif // WEBSOCKET_CONNECTION_H

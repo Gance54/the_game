@@ -24,6 +24,8 @@ Registration::Registration(QObject *parent) :
     if (regObject) {
         QObject::connect(regObject, SIGNAL(registerMe()), this, SLOT(registerMe()));
     }
+
+    socketManager_.openUrl(SERVER_URL);
 }
 
 QString Registration::getLogin() {
@@ -64,6 +66,10 @@ void Registration::registerMe() {
         return;
     }
 
+    if (!socketManager_.connected()) {
+        socketManager_.openUrl(SERVER_URL);
+    }
+
     JsonRegRequest request;
     request.setLogin(login_);
     request.setPassword(password_);
@@ -73,7 +79,6 @@ void Registration::registerMe() {
     message.print();
     QJsonDocument doc(message.object());
 
-    socketManager_.openUrl(SERVER_URL);
     socketManager_.sendJson(doc);
 
     connect(&socketManager_, &WebSocketManager::dataReceived,
@@ -93,4 +98,6 @@ void Registration::processRegistrationResponse(QByteArray message) {
     QJsonDocument doc = QJsonDocument::fromJson(message);
     qDebug("message: %s", qPrintable(doc.toJson(QJsonDocument::Indented)));
     socketManager_.getInfo()->setStatus("OK!");
+    disconnect(&socketManager_, &WebSocketManager::dataReceived,
+               this, &Registration::processRegistrationResponse);
 }
