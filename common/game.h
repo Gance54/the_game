@@ -43,5 +43,18 @@ private:
 
 };
 
+enum MessageTag {
+    TAG_REGISTRATION  = 1,
+    TAG_LOGIN,
+
+    TAG_UNKNOWN
+};
+
+enum ErrorCode {
+    ERROR_OK = 0,
+    ERROR_LOGIN_EXISTS = -100,
+
+    ERROR_UNKNOWN = -1000
+};
 
 #endif // GAME_H

@@ -4,7 +4,11 @@
 #include <QQmlComponent>
 
 #include "registration.h"
+#include "json_classes.h"
+#include "game.h"
 
+
+//TODO: replace info object from socket manager to registration
 Registration::Registration(QObject *parent) :
     QObject(parent) {
 
@@ -20,6 +24,8 @@ Registration::Registration(QObject *parent) :
     if (regObject) {
         QObject::connect(regObject, SIGNAL(registerMe()), this, SLOT(registerMe()));
     }
+
+    socketManager_.openUrl(SERVER_URL);
 }
 
 QString Registration::getLogin() {
@@ -55,22 +61,28 @@ void Registration::setEmail(const QString &email) {
 }
 
 void Registration::registerMe() {
-    /*if (verify()) {
-        qDebug("Verification failed");
+    if (verify()) {
+        socketManager_.getInfo()->setStatus("Please fill form correctly!");
         return;
-    }*/
+    }
 
-    QJsonObject payload;
-    payload.insert("login", QJsonValue::fromVariant(login_));
-    payload.insert("password", QJsonValue::fromVariant(password_));
-    payload.insert("email", QJsonValue::fromVariant(email_));
-    QJsonObject header;
-    header.insert("tag", QJsonValue::fromVariant(WebSocketManager::TAG_LOGIN));
-    QJsonObject message;
-    message.insert("header", QJsonValue(header));
-    message.insert("payload", QJsonValue(payload));
-    QJsonDocument doc(message);
-    socketManager_.openUrl(SERVER_URL);
+    if (!socketManager_.connected()) {
+        socketManager_.openUrl(SERVER_URL);
+    }
+
+    JsonRegRequest request;
+    request.setLogin(login_);
+    request.setPassword(password_);
+    request.setEmail(email_);
+
+    JsonMessage message(MessageTag::TAG_REGISTRATION, request.object());
+    message.print();
+    QJsonDocument doc(message.object());
+
+    socketManager_.sendJson(doc);
+
+    connect(&socketManager_, &WebSocketManager::dataReceived,
+            this, &Registration::processRegistrationResponse);
 }
 
 int Registration::verify() {
@@ -80,4 +92,14 @@ int Registration::verify() {
         return -1;
     }
     return 0;
+}
+
+void Registration::processRegistrationResponse(QByteArray message) {
+    QJsonDocument doc = QJsonDocument::fromJson(message);
+    qDebug("message: %s", qPrintable(doc.toJson(QJsonDocument::Indented)));
+
+    JsonResponse resp(doc.object());
+    socketManager_.getInfo()->setStatus(resp.getString());
+    disconnect(&socketManager_, &WebSocketManager::dataReceived,
+               this, &Registration::processRegistrationResponse);
 }

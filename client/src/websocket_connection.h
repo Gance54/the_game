@@ -9,30 +9,37 @@
 #include <QObject>
 #include <QString>
 #include <QDebug>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
+#include "json_classes.h"
 #include "info.h"
 
-#define SERVER_URL "wss://192.168.0.169:35250"
+#define SERVER_URL "wss://78.27.147.83:35250"
+
+class QWebSocketEx : public QWebSocket {
+
+};
 
 class WebSocketManager : public QObject {
     Q_OBJECT
 public:
-    enum MessageTags {
-        TAG_REGISTRATION  = 1,
-        TAG_LOGIN
-    };
 
     WebSocketManager();
     void openUrl(QString url);
     Info *getInfo();
+    int sendJson(QJsonDocument &doc);
+    QWebSocketEx& getSocket();
+    bool connected();
+
+signals:
+    void dataReceived(QByteArray message);
+
+public slots:
+    void emitDataReceived(QByteArray message);
 
 private:
-    QWebSocket webSocket_;
+    QWebSocketEx webSocket_;
     bool connected_;
     Info info_;
-
+    QString url_;
 };
 
 #endif // WEBSOCKET_CONNECTION_H

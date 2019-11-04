@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         ../common/http_connection.cpp \
+        ../common/json_classes.cpp \
         database.cpp \
         main.cpp \
         server.cpp
@@ -33,6 +34,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     ../common/game.h \
     ../common/http_connection.h \
+    ../common/json_classes.h \
     database.h \
     log.h \
     server.h

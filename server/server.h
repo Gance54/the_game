@@ -3,6 +3,8 @@
 
 #include <QTcpServer>
 #include <QWebSocketServer>
+
+#include "database.h"
 class Server : public QObject
 {
     Q_OBJECT
@@ -21,6 +23,9 @@ private Q_SLOTS:
 private:
     QWebSocketServer *pWebSocketServer_;
     QList<QWebSocket *> clients_;
+    Database db_;
+
+
 };
 
 #endif // SERVER_H

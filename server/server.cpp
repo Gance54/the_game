@@ -8,7 +8,9 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+
 #include "server.h"
+#include "json_classes.h"
 #include "log.h"
 
 QT_USE_NAMESPACE
@@ -16,8 +18,7 @@ QT_USE_NAMESPACE
 //! [constructor]
 Server::Server(quint16 port, QObject *parent) :
     QObject(parent),
-    pWebSocketServer_(nullptr)
-{
+    pWebSocketServer_(nullptr) {
     pWebSocketServer_ = new QWebSocketServer(QStringLiteral("SSL Echo Server"),
                                               QWebSocketServer::SecureMode,
                                               this);
@@ -50,9 +51,9 @@ Server::Server(quint16 port, QObject *parent) :
     if (ipAddress.toString().isEmpty())
           ipAddress = QHostAddress(QHostAddress::LocalHost);
 
-    if (pWebSocketServer_->listen(ipAddress, port))
-    {
-        qDebug() << "SSL Echo Server listening on port" << port << ":" << pWebSocketServer_->serverUrl().toString();
+    if (pWebSocketServer_->listen(ipAddress, port)) {
+	qDebug() << "SSL Echo Server listening on port" << port << ":"
+		 << pWebSocketServer_->serverUrl().toString();
         connect(pWebSocketServer_, &QWebSocketServer::newConnection,
                 this, &Server::onNewConnection);
         connect(pWebSocketServer_, &QWebSocketServer::sslErrors,
@@ -60,57 +61,62 @@ Server::Server(quint16 port, QObject *parent) :
     }
 }
 
-Server::~Server()
-{
+Server::~Server() {
     pWebSocketServer_->close();
     qDeleteAll(clients_.begin(), clients_.end());
     qDebug() << "Closing server";
 }
 
-void Server::onNewConnection()
-{
+void Server::onNewConnection() {
     QWebSocket *pSocket = pWebSocketServer_->nextPendingConnection();
 
-    qDebug() << "Client connected:" << pSocket->peerName() << pSocket->origin();
+    qDebug("Client connected with socket %p", (void*)pSocket);
 
     connect(pSocket, &QWebSocket::textMessageReceived, this, &Server::processTextMessage);
-    connect(pSocket, &QWebSocket::binaryMessageReceived,
-            this, &Server::processBinaryMessage);
+    connect(pSocket, &QWebSocket::binaryMessageReceived, this, &Server::processBinaryMessage);
     connect(pSocket, &QWebSocket::disconnected, this, &Server::socketDisconnected);
 
     clients_ << pSocket;
 }
 
-void Server::processTextMessage(QString message)
-{
+void Server::processTextMessage(QString message) {
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    if (pClient)
-    {
-        pClient->sendTextMessage(message);
+    if (pClient) {
+	qDebug () << "Text message: " << message;
     }
 }
 
-void Server::processBinaryMessage(QByteArray message)
-{
+void Server::processBinaryMessage(QByteArray message) {
+    qDebug() << "Processing binary message...";
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    if (pClient)
-    {
-	qDebug() <<(QJsonDocument::fromJson(message)).toJson(QJsonDocument::Compact);
+    if (!pClient) {
+        qDebug("No client. Ignoring");
     }
+
+    JsonMessage msg(QJsonDocument::fromJson(message));
+    ErrorCode ret = ERROR_UNKNOWN;
+    switch (msg.getHeader().getTag()) {
+    case MessageTag::TAG_REGISTRATION:
+        ret = db_.ProcessRegistrationRequest(msg.getPayload());
+        break;
+    default:
+        return;
+    }
+
+    JsonResponse response(ret);
+
+    pClient->sendBinaryMessage(QJsonDocument(response.object()).toJson());
 }
 
-void Server::socketDisconnected()
-{
+void Server::socketDisconnected() {
     qDebug() << "Client disconnected";
     QWebSocket *pClient = qobject_cast<QWebSocket *>(sender());
-    if (pClient)
-    {
+    if (pClient) {
         clients_.removeAll(pClient);
         pClient->deleteLater();
     }
 }
 
-void Server::onSslErrors(const QList<QSslError> &)
-{
+void Server::onSslErrors(const QList<QSslError> &) {
     qDebug() << "Ssl errors occurred";
 }
