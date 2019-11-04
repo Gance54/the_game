@@ -18,24 +18,24 @@ JsonHeader::JsonHeader(MessageTag tag) {
 }
 
 JsonHeader::JsonHeader(QJsonObject object) {
-    header_ = object;
-    tag_ = static_cast<MessageTag>(header_["tag"].toInt());
+    object_ = object;
+    tag_ = static_cast<MessageTag>(object_["tag"].toInt());
 }
 
 void JsonHeader::setTag(MessageTag tag) {
     tag_ = tag;
-    header_.insert("tag", tag);
+    object_.insert("tag", tag);
 }
 
 void JsonHeader::setObject(QJsonObject header) {
-    header_ = header;
+    object_ = header;
     ssid_ = header["ssid"].toVariant().toULongLong();
-    tag_ = static_cast<MessageTag>(header_["tag"].toInt());
+    tag_ = static_cast<MessageTag>(object_["tag"].toInt());
 }
 
 void JsonHeader::setSsid(qulonglong ssid) {
     ssid_ = ssid;
-    header_.insert("ssid", QJsonValue::fromVariant(QVariant::fromValue(ssid_)));
+    object_.insert("ssid", QJsonValue::fromVariant(QVariant::fromValue(ssid_)));
 }
 qulonglong JsonHeader::getSsid() {
     return ssid_;
@@ -46,11 +46,7 @@ MessageTag JsonHeader::getTag() {
 }
 
 QJsonObject JsonHeader::object() {
-    return header_;
-}
-
-void JsonHeader::print() {
-   // printJson("Header", header_);
+    return object_;
 }
 
 /* JsonMessage class */
@@ -60,9 +56,9 @@ JsonMessage::JsonMessage() {
 }
 
 JsonMessage::JsonMessage(QJsonDocument document) {
-    message_ = document.object();
-    header_.setObject(message_["header"].toObject());
-    payload_ = message_["payload"].toObject();
+    object_ = document.object();
+    header_.setObject(object_["header"].toObject());
+    payload_ = object_["payload"].toObject();
 }
 
 JsonMessage::JsonMessage(JsonHeader header, QJsonObject payload) {
@@ -78,11 +74,11 @@ JsonMessage::JsonMessage(MessageTag tag, QJsonObject payload) {
 
 void JsonMessage::setHeader(JsonHeader header) {
     header_ = header;
-    message_.insert("header", header_.object());
+    object_.insert("header", header_.object());
 }
 void JsonMessage::setPayload(QJsonObject payload) {
     payload_ = payload;
-    message_.insert("payload", payload_);
+    object_.insert("payload", payload_);
 }
 
 JsonHeader JsonMessage::getHeader() {
@@ -94,11 +90,7 @@ QJsonObject JsonMessage::getPayload() {
 }
 
 QJsonObject JsonMessage::object() {
-    return message_;
-}
-
-void JsonMessage::print() {
-   //printJson("Message", message_);
+    return object_;
 }
 
 /* JsonResponse class */
@@ -109,9 +101,9 @@ JsonResponse::JsonResponse() {
 }
 
 JsonResponse::JsonResponse(QJsonObject obj) {
-    response_ = obj;
-    error_ = static_cast<ErrorCode>(response_["error"].toInt());
-    extra_ = response_["extra"].toObject();
+    object_ = obj;
+    error_ = static_cast<ErrorCode>(object_["error"].toInt());
+    extra_ = object_["extra"].toObject();
 }
 
 JsonResponse::JsonResponse(ErrorCode err) {
@@ -129,16 +121,16 @@ QJsonObject JsonResponse::getExtra() {
 }
 
 QJsonObject JsonResponse::object() {
-    return response_;
+    return object_;
 }
 
 void JsonResponse::setError(ErrorCode err) {
     error_ = err;
-    response_.insert("error", error_);
+    object_.insert("error", error_);
 }
 void JsonResponse::setExtra(QJsonObject extra) {
     extra_ = extra;
-    response_.insert("extra", extra);
+    object_.insert("extra", extra);
 }
 
 QString JsonResponse::getString() {
@@ -161,10 +153,10 @@ JsonRegRequest::JsonRegRequest() {
 }
 
 JsonRegRequest::JsonRegRequest(QJsonObject obj) {
-    request_ = obj;
-    login_ = request_["login"].toString();
-    password_ = request_["password"].toString();
-    email_ = request_["email"].toString();
+    object_ = obj;
+    login_ = object_["login"].toString();
+    password_ = object_["password"].toString();
+    email_ = object_["email"].toString();
 }
 
 QString JsonRegRequest::getLogin() {
@@ -181,21 +173,17 @@ QString JsonRegRequest::getEmail() {
 
 void JsonRegRequest::setLogin(QString login) {
     login_ = login;
-    request_.insert("login", login_);
+    object_.insert("login", login_);
 }
 void JsonRegRequest::setPassword(QString password) {
     password_ = password;
-    request_.insert("password", password_);
+    object_.insert("password", password_);
 }
 void JsonRegRequest::setEmail(QString email) {
     email_ = email;
-    request_.insert("email", email_);
+    object_.insert("email", email_);
 }
 
 QJsonObject JsonRegRequest::object() {
-    return request_;
-}
-
-void JsonRegRequest::print() {
-   //printJson("Registration request", request_);
+    return object_;
 }

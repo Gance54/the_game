@@ -10,12 +10,13 @@ class Json {
 public:
     virtual QJsonObject object() = 0;
     virtual void print();
+    virtual ~Json (){}
 
 protected:
     QJsonObject object_;
 };
 
-class JsonHeader {
+class JsonHeader : public Json {
 public:
     JsonHeader();
     JsonHeader(MessageTag tag);
@@ -29,15 +30,12 @@ public:
     MessageTag getTag();
     QJsonObject object();
 
-    void print();
-
 private:
     MessageTag tag_;
     qulonglong ssid_;
-    QJsonObject header_;
 };
 
-class JsonMessage {
+class JsonMessage : public Json {
 public:
     JsonMessage();
     JsonMessage(QJsonDocument document);
@@ -51,15 +49,12 @@ public:
     QJsonObject getPayload();
     QJsonObject object();
 
-    void print();
-
 private:
     JsonHeader header_;
     QJsonObject payload_;
-    QJsonObject message_;
 };
 
-class JsonResponse {
+class JsonResponse : public Json {
 public:
     JsonResponse();
     JsonResponse(QJsonObject obj);
@@ -76,10 +71,9 @@ public:
 private:
     ErrorCode error_;
     QJsonObject extra_;
-    QJsonObject response_;
 };
 
-class JsonRegRequest {
+class JsonRegRequest : public Json {
 public:
     JsonRegRequest();
     JsonRegRequest(QJsonObject obj);
@@ -95,12 +89,10 @@ public:
 
     QJsonObject object();
 
-    void print();
 private:
     QString login_;
     QString password_;
     QString email_;
-    QJsonObject request_;
     //QString question_;
     //QString answer_;
 };
