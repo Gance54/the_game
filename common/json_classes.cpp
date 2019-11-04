@@ -4,9 +4,9 @@
 /* JsonHeader class */
 /* --------------------------------------------*/
 
-static void printJson (QString header, QJsonObject object) {
-    QString str = QJsonDocument(object).toJson(QJsonDocument::Indented);
-    qDebug("%s:\n%s", qPrintable(header), qPrintable(str));
+void Json::print() {
+    QString str = QJsonDocument(object_).toJson(QJsonDocument::Indented);
+    qDebug("Json dump:\n%s", qPrintable(str));
 }
 
 JsonHeader::JsonHeader() {

@@ -6,6 +6,15 @@
 #include <QJsonObject>
 #include "game.h"
 
+class Json {
+public:
+    virtual QJsonObject object() = 0;
+    virtual void print();
+
+protected:
+    QJsonObject object_;
+};
+
 class JsonHeader {
 public:
     JsonHeader();
