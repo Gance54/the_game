@@ -16,17 +16,22 @@ public:
     explicit Info(QObject *parent = nullptr);
     QString getVersion();
     QString getStatus();
+    QString getErrLogin();
 
     void setStatus(QString status);
+    void setErrLogin(QString errLogin);
 
 signals:
     void statusChanged();
+    void errLoginOccured();
 
 public slots:
     void onStatusChanged(const QString status);
+    void onErrLogin(const QString errLogin);
 
 private:
     QString status_;
+    QString errLogin_;
     Version version_;
 };
 

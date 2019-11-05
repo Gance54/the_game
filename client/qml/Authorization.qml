@@ -110,78 +110,10 @@ Window {
             id: loginMouseArea
             anchors.fill: parent
             onPressed: {
-                login_btn.qmlSignalPressed(login_input.text, pwd_input.text)
+                login_btn.qmlSignalPressed(input_login.text, input_pwd.text)
                 InfoObject.status = qsTr("Loggin in...")
             }
         }
-    }
-
-    Rectangle {
-        id: login_rect
-        x: 140
-        y: 98
-        width: 120
-        height: 25
-        color: "#fefad3"
-        radius: 5
-        border.width: 1
-
-        Text {
-            id: login_label
-            x: -58
-            y: 6
-            width: 44
-            height: 14
-            text: qsTr("Login")
-            font.pixelSize: 12
-        }
-
-        TextInput {
-            id: login_input
-            text: LoginObject.login
-            font.family: "Times New Roman"
-            anchors.bottomMargin: 0
-            anchors.fill: parent
-            clip: false
-            opacity: 1
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 15
-            cursorVisible: false
-        }
-
-    }
-
-    Rectangle {
-        id: pwd_rect
-        x: 140
-        y: 149
-        width: 120
-        height: 25
-        color: "#fefad3"
-        radius: 5
-        border.width: 1
-
-        Text {
-            id: pwd_label
-            x: -60
-            y: 8
-            width: 49
-            height: 14
-            text: qsTr("Password")
-            font.pixelSize: 12
-        }
-
-        TextInput {
-            id: pwd_input
-            text: LoginObject.password
-            anchors.fill: parent
-            opacity: 1
-            cursorVisible: false
-            clip: false
-            font.pixelSize: 15
-            horizontalAlignment: Text.AlignHCenter
-        }
-
     }
 
     Text {
@@ -208,16 +140,23 @@ Window {
         font.pixelSize: 14
     }
 
-    /* Registration window, defined in Registration.qml
-
-    Registration {
-        id: reg_win
-        objectName: qsTr("RegistrationWindow")
+    TextField {
+        id: input_login
+        x: 94
+        y: 74
+        text: qsTr("")
+        placeholderText: "Your login"
     }
 
-    // Registration ends
+    TextField {
+        id: input_pwd
+        x: 94
+        y: 140
+        text: qsTr("")
+        placeholderText: "Your password"
+    }
 
-    */
+
 
 }
 
@@ -225,9 +164,9 @@ Window {
 
 
 
-/*##^## Designer {
-    D{i:3;anchors_x:"-31";anchors_y:17}D{i:4;anchors_height:54;anchors_width:120;anchors_x:0;anchors_y:0}
-D{i:2;anchors_x:"-148";anchors_y:"-107"}D{i:9;anchors_height:22;anchors_width:107;anchors_x:0;anchors_y:25}
-D{i:12;anchors_height:22;anchors_width:107;anchors_x:0;anchors_y:25}
+/*##^##
+Designer {
+    D{i:2;anchors_x:"-148";anchors_y:"-107"}D{i:3;anchors_x:"-31";anchors_y:17}D{i:4;anchors_height:54;anchors_width:120;anchors_x:0;anchors_y:0}
+D{i:9;anchors_height:22;anchors_width:107;anchors_x:0;anchors_y:25}
 }
- ##^##*/
+##^##*/

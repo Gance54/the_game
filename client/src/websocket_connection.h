@@ -12,7 +12,7 @@
 #include "json_classes.h"
 #include "info.h"
 
-#define SERVER_URL "wss://78.27.147.83:35250"
+#define SERVER_URL "wss://10.0.2.15:35250"
 
 class QWebSocketEx : public QWebSocket {
 
