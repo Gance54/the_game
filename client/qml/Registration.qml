@@ -12,28 +12,28 @@ Window {
     TextField {
         id: login
         x: 150
-        y: 34
+        y: 51
         placeholderText: "Your login"
     }
 
     TextField {
         id: pwd
         x: 150
-        y: 92
+        y: 113
         placeholderText: "Your password"
     }
 
     TextField {
         id: pwd_rpt
         x: 150
-        y: 152
+        y: 174
         placeholderText: "Repeat password"
     }
 
     TextField {
         id: email
         x: 150
-        y: 213
+        y: 236
         placeholderText: "Your email"
     }
 
@@ -99,6 +99,21 @@ Window {
         font.pixelSize: 12
     }
 
+    TextArea {
+        id: err_login
+        x: 160
+        y: 90
+        width: 181
+        height: 17
+        text: qsTr("test")
+        leftPadding: 4
+        color: "#E4000F"
+        topPadding: 3
+        bottomPadding: 0
+        visible: true
+        font.pointSize: 8
+    }
+
 }
 
 
@@ -129,7 +144,8 @@ Window {
 
 
 
-/*##^## Designer {
+/*##^##
+Designer {
     D{i:3;anchors_height:20;anchors_width:80;anchors_x:2}
 }
- ##^##*/
+##^##*/
