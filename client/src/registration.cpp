@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQmlComponent>
+#include <QCryptographicHash>
 
 #include "registration.h"
 #include "json_classes.h"

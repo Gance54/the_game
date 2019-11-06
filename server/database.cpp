@@ -29,7 +29,7 @@ ErrorCode Database::ProcessRegistrationRequest(QJsonObject req) {
     if(!foundArr.isEmpty())
         return ERROR_LOGIN_EXISTS;
 
-    qDebug("Find response: %s", qPrintable(reply.toJson(QJsonDocument::Indented)));
+    qDebug("DB Registration response: %s", qPrintable(reply.toJson(QJsonDocument::Indented)));
 
     QString writeUrl = DB_URL "/login_db";
 
