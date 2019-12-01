@@ -27,7 +27,7 @@ signals:
 
 public slots:
     void onStatusChanged(const QString status);
-    void onErrLogin(const QString errLogin);
+    //void onErrLogin(const QString errLogin);
 
 private:
     QString status_;

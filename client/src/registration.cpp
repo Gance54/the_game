@@ -100,7 +100,7 @@ void Registration::processRegistrationResponse(QByteArray message) {
     qDebug("message: %s", qPrintable(doc.toJson(QJsonDocument::Indented)));
 
     JsonResponse resp(doc.object());
-    socketManager_.getInfo()->setStatus(resp.getString());
+    socketManager_.getInfo()->setStatus(resp.getErrorString());
     disconnect(&socketManager_, &WebSocketManager::dataReceived,
                this, &Registration::processRegistrationResponse);
 }

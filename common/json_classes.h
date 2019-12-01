@@ -66,7 +66,7 @@ public:
     QJsonObject object();
     void setError(ErrorCode err);
     void setExtra(QJsonObject extra);
-    QString getString();
+    QString getErrorString();
 
 private:
     ErrorCode error_;

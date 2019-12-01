@@ -133,7 +133,7 @@ void JsonResponse::setExtra(QJsonObject extra) {
     object_.insert("extra", extra);
 }
 
-QString JsonResponse::getString() {
+QString JsonResponse::getErrorString() {
     switch (error_) {
     case ERROR_OK:
         return "Success!";
