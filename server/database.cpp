@@ -26,7 +26,7 @@ ErrorCode Database::ProcessRegistrationRequest(QJsonObject req) {
     QJsonDocument reply = cManager_->dPost(findUrl, QJsonDocument(dbreq));
     QJsonArray foundArr = reply["docs"].toArray();
 
-    if(!foundArr.isEmpty())
+    if (!foundArr.isEmpty())
         return ERROR_LOGIN_EXISTS;
 
     qDebug("DB Registration response: %s", qPrintable(reply.toJson(QJsonDocument::Indented)));

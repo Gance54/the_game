@@ -4,7 +4,7 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    Server *tcpServer = new Server(35250);
+    Server tcpServer(35250);
     Database db;
     db.testDatabaseConnection();
 

@@ -2,3 +2,4 @@ To launch couchdb please use https://docs.couchdb.org/en/latest/install/unix.htm
 Use instalation with sources. Mirrors: https://www.apache.org/dyn/closer.lua?path=/couchdb/source/2.3.1/apache-couchdb-2.3.1.tar.gz
 To make things work on Windows - please copy openssl dll's to C:/Windows/SysWOW64
 To make Client work on ubuntu - sudo apt install libgl1-mesa-dev
+To run couchdb: sudo -i -u couchdb /home/couchdb/bin/couchdb
