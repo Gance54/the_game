@@ -96,13 +96,9 @@ QJsonObject JsonMessage::object() {
 /* JsonResponse class */
 /* --------------------------------------------*/
 
-JsonResponse::JsonResponse() {
-    error_ = ErrorCode::ERROR_UNKNOWN;
-}
-
 JsonResponse::JsonResponse(QJsonObject obj) {
     object_ = obj;
-    error_ = static_cast<ErrorCode>(object_["error"].toInt());
+    error_.setError(static_cast<ErrorCode::Code>(object_["error"].toInt()));
     extra_ = object_["extra"].toObject();
 }
 
@@ -124,26 +120,13 @@ QJsonObject JsonResponse::object() {
     return object_;
 }
 
-void JsonResponse::setError(ErrorCode err) {
+void JsonResponse::setError(ErrorCode &err) {
     error_ = err;
-    object_.insert("error", error_);
+    object_.insert("error", error_.getError());
 }
 void JsonResponse::setExtra(QJsonObject extra) {
     extra_ = extra;
     object_.insert("extra", extra);
-}
-
-QString JsonResponse::getErrorString() {
-    switch (error_) {
-    case ERROR_OK:
-        return "Success!";
-    case ERROR_UNKNOWN:
-        return "Unknown error";
-    case ERROR_LOGIN_EXISTS:
-        return "Login already exists.";
-    default:
-        return "WTF?!";
-    }
 }
 
 /* JsonRegRequest class */

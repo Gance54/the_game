@@ -56,7 +56,7 @@ private:
 
 class JsonResponse : public Json {
 public:
-    JsonResponse();
+    JsonResponse() : error_(ErrorCode::ERROR_UNKNOWN) {}
     JsonResponse(QJsonObject obj);
     JsonResponse(ErrorCode err);
     ~JsonResponse();
@@ -64,9 +64,8 @@ public:
     ErrorCode getError();
     QJsonObject getExtra();
     QJsonObject object();
-    void setError(ErrorCode err);
+    void setError(ErrorCode &err);
     void setExtra(QJsonObject extra);
-    QString getErrorString();
 
 private:
     ErrorCode error_;

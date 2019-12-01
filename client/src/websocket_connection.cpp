@@ -56,7 +56,7 @@ void WebSocketManager::openUrl(QString url) {
     info_.setStatus("Waiting for connection...");
 }
 
-Info * WebSocketManager::getInfo() {
+Info* WebSocketManager::getInfo() {
     return &info_;
 }
 

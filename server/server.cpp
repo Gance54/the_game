@@ -95,11 +95,11 @@ void Server::processBinaryMessage(QByteArray message) {
 
     JsonMessage msg(QJsonDocument::fromJson(message));
     msg.print();
-    ErrorCode ret = ERROR_UNKNOWN;
+    ErrorCode ret(ErrorCode::ERROR_LOGIN_EXISTS);
     JsonResponse response;
     switch (msg.getHeader().getTag()) {
     case MessageTag::TAG_REGISTRATION:
-        ret = db_.ProcessRegistrationRequest(msg.getPayload());
+        ret.setError(db_.ProcessRegistrationRequest(msg.getPayload()));
         break;
     default:
         return;

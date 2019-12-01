@@ -50,11 +50,42 @@ enum MessageTag {
     TAG_UNKNOWN
 };
 
-enum ErrorCode {
-    ERROR_OK = 0,
-    ERROR_LOGIN_EXISTS = -100,
+class ErrorCode {
+public:
+    enum Code {
+        ERROR_OK = 0,
+        ERROR_LOGIN_EXISTS = -100,
+        ERROR_DB_INTERNAL_ERROR = 101,
 
-    ERROR_UNKNOWN = -1000
+        ERROR_UNKNOWN = -1000
+    };
+
+    ErrorCode() : error_(ERROR_UNKNOWN) {}
+    ErrorCode(Code e) : error_(e) {}
+
+    QString getErrorString() {
+        switch (error_) {
+        case ERROR_OK:
+            return "Success!";
+        case ERROR_UNKNOWN:
+            return "Unknown error";
+        case ERROR_LOGIN_EXISTS:
+            return "Login already exists.";
+        default:
+            return "WTF?!";
+        }
+    }
+
+    Code getError() {
+        return error_;
+    }
+
+    void setError(Code e) {
+        error_ = e;
+    }
+
+private:
+    Code error_;
 };
 
 #endif // GAME_H

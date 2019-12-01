@@ -15,7 +15,7 @@ Database::~Database() {
     delete cManager_;
 }
 
-ErrorCode Database::ProcessRegistrationRequest(QJsonObject req) {
+ErrorCode::Code Database::ProcessRegistrationRequest(QJsonObject req) {
     JsonRegRequest reg(req);
     QJsonObject dbreq;
     QJsonObject selector;
@@ -27,7 +27,7 @@ ErrorCode Database::ProcessRegistrationRequest(QJsonObject req) {
     QJsonArray foundArr = reply["docs"].toArray();
 
     if (!foundArr.isEmpty())
-        return ERROR_LOGIN_EXISTS;
+        return ErrorCode::ERROR_LOGIN_EXISTS;
 
     qDebug("DB Registration response: %s", qPrintable(reply.toJson(QJsonDocument::Indented)));
 
@@ -37,10 +37,10 @@ ErrorCode Database::ProcessRegistrationRequest(QJsonObject req) {
 
     if(!reply["ok"].toBool()) {
         LOGE("Failed to write to DB");
-        return ERROR_UNKNOWN;
+        return ErrorCode::ERROR_DB_INTERNAL_ERROR;
     }
 
-    return ERROR_OK;
+    return ErrorCode::ERROR_OK;
 }
 
 int Database::testDatabaseConnection() {

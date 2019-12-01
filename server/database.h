@@ -8,7 +8,7 @@ public:
     ~Database();
 
    int testDatabaseConnection();
-   ErrorCode ProcessRegistrationRequest(QJsonObject req);
+   ErrorCode::Code ProcessRegistrationRequest(QJsonObject req);
 
 private:
     ConnectivityManager *cManager_;
