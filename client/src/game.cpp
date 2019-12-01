@@ -12,8 +12,7 @@
 int main(int argc, char *argv[]) {
     QGuiApplication app(argc, argv);
 
-    Authorization *auth = new Authorization();
-    Registration *reg = new Registration();
+    Authorization auth;// = new Authorization();
 
     return app.exec();
 }
